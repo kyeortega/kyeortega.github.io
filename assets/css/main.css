@@ -235,6 +235,15 @@ input, select, textarea {
 			transition: none !important;
 		}
 
+#userPhoto{
+    width: 96px;
+    height: 96px;
+    display: block;
+    margin: 35px auto 20px;
+    border-radius: 50%;
+    border: solid var(--color) 2px;
+}
+
 /* Type */
 
 	body, input, select, textarea {
