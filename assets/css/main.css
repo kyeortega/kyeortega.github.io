@@ -774,11 +774,16 @@ input, select, textarea {
 		border: 0;
 		display: inline-block;
 		position: relative;
+		max-width: 100%;
+		box-sizing: border-box;
 	}
 
 		.image img {
 			border-radius: 8px;
 			display: block;
+			width: 100%;
+			height: auto;
+			max-width: 100%;
 		}
 
 		.image.left, .image.right {
