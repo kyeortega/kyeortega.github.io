@@ -259,8 +259,8 @@ input, select, textarea {
 		}
 
 	strong, b {
-		color: #555;
-		font-weight: 500;
+		color: #000000;
+		font-weight: bold;
 	}
 
 	em, i {
