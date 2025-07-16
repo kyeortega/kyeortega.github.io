@@ -149,6 +149,10 @@ body {
 	-webkit-text-size-adjust: none;
 }
 
+.bold-text {
+  font-weight: bold;
+}
+
 mark {
 	background-color: transparent;
 	color: inherit;
