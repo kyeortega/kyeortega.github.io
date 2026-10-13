@@ -1,0 +1,1303 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kye Ortega</title>
+  <!-- spider favicon (inline SVG, no extra file needed) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-20 -20 40 40'%3E%3Crect x='-20' y='-20' width='40' height='40' rx='9' fill='%23992222'/%3E%3Cg stroke='%23120708' stroke-width='2.4' stroke-linecap='round' fill='none'%3E%3Cpath d='M0 1L-9-9M0 1L-12-2M0 1L-11 7M0 1L-8 13M0 1L9-9M0 1L12-2M0 1L11 7M0 1L8 13'/%3E%3C/g%3E%3Cellipse cx='0' cy='5' rx='6' ry='8' fill='%23120708'/%3E%3Ccircle cx='0' cy='-5' r='4.5' fill='%23120708'/%3E%3Ccircle cx='-1.8' cy='-6.3' r='1.1' fill='%23ffc919'/%3E%3Ccircle cx='1.8' cy='-6.3' r='1.1' fill='%23ffc919'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Bowlby+One+SC&family=Fredoka:wght@500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --red: #992222;
+      --navy: #1f2f8f;
+      --navy-edge: #15216b;
+      --yellow: #ffc919;
+      --web: #f4e9e4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0
+    }
+
+    body {
+      position: fixed;
+      /* nothing can ever scroll the page sideways/up and make the web jump */
+      inset: 0;
+      width: 100%
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+      overscroll-behavior: none;
+      background: var(--red);
+      font-family: 'Fredoka', system-ui, sans-serif
+    }
+
+    /* ---------- web background ---------- */
+    #bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      transform: translateZ(0);
+      /* own GPU layer so page transitions don't repaint the web */
+      backface-visibility: hidden
+    }
+
+    #bg .light path {
+      stroke: var(--web);
+      fill: none;
+      stroke-linecap: round
+    }
+
+    #bg .dark path {
+      stroke: #1a0a0c;
+      fill: none;
+      stroke-linecap: round;
+      opacity: .85
+    }
+
+    .sway {
+      animation: sway 9s ease-in-out infinite alternate;
+      transform-box: view-box
+    }
+
+    .sway.b {
+      animation-duration: 12s;
+      animation-delay: -4s
+    }
+
+    .sway.c {
+      animation-duration: 14s;
+      animation-delay: -7s
+    }
+
+    @keyframes sway {
+      from {
+        transform: rotate(-.8deg) scale(1)
+      }
+
+      to {
+        transform: rotate(.8deg) scale(1.018)
+      }
+    }
+
+    .ring {
+      animation: ripple 5s ease-in-out infinite
+    }
+
+    @keyframes ripple {
+
+      0%,
+      100% {
+        opacity: .55
+      }
+
+      8% {
+        opacity: 1
+      }
+
+      22% {
+        opacity: .55
+      }
+    }
+
+    #parallax {
+      transition: transform .25s ease-out;
+      will-change: transform
+    }
+
+    /* ---------- intro spiders ---------- */
+    #spiders {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 50
+    }
+
+    .spider {
+      position: absolute;
+      left: 0;
+      top: 0;
+      will-change: transform, opacity
+    }
+
+    .spider svg {
+      display: block;
+      overflow: visible
+    }
+
+    .spider .legs line {
+      stroke: #120708;
+      stroke-width: 2.4;
+      stroke-linecap: round
+    }
+
+    .spider .legA {
+      transform-origin: 0 0;
+      animation: skitter .16s ease-in-out infinite alternate
+    }
+
+    .spider .legB {
+      transform-origin: 0 0;
+      animation: skitter .16s ease-in-out infinite alternate-reverse
+    }
+
+    @keyframes skitter {
+      from {
+        transform: rotate(-9deg)
+      }
+
+      to {
+        transform: rotate(9deg)
+      }
+    }
+
+    /* ---------- nav ---------- */
+    /* nav is positioned from JS relative to the web centre; --u scales with the web */
+    nav {
+      --cx: 55%;
+      --cy: 14%;
+      --u: .7
+    }
+
+    nav a {
+      position: absolute;
+      display: block;
+      white-space: nowrap;
+      padding: .55em 1.1em;
+      border-radius: 999px;
+      left: calc(var(--cx) + var(--dx) * var(--u) * 1px);
+      top: calc(var(--cy) + var(--dy) * var(--u) * 1px);
+      background: var(--navy);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: calc(34px * var(--p, var(--u)));
+      border: calc(5px * var(--p, var(--u))) solid var(--navy-edge);
+      box-shadow: 0 calc(8px * var(--p, var(--u))) 0 rgba(0, 0, 0, .25);
+      transform: translate(-50%, -50%) rotate(var(--r));
+      animation: float 5s ease-in-out infinite;
+      animation-delay: var(--d);
+      transition: background .2s;
+    }
+
+    nav a:hover {
+      background: #2c42c4;
+      animation: wiggle .5s ease-in-out infinite
+    }
+
+    nav a.active {
+      text-decoration: underline;
+      text-underline-offset: .2em
+    }
+
+    nav a[href="#home"] {
+      --dx: 0;
+      --dy: -85;
+      --r: 12deg;
+      --d: 0s
+    }
+
+    nav a[href="#about"] {
+      --dx: 177;
+      --dy: -52;
+      --r: -13deg;
+      --d: -1s
+    }
+
+    nav a[href="#portfolio"] {
+      --dx: -123;
+      --dy: 18;
+      --r: -11deg;
+      --d: -2s
+    }
+
+    nav a[href="#connect"] {
+      --dx: 100;
+      --dy: 72;
+      --r: -9deg;
+      --d: -3s
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) rotate(var(--r))
+      }
+
+      50% {
+        transform: translate(-50%, calc(-50% - 8px * var(--u))) rotate(calc(var(--r) + 2deg))
+      }
+    }
+
+    @keyframes wiggle {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) rotate(calc(var(--r) - 4deg)) scale(1.08)
+      }
+
+      50% {
+        transform: translate(-50%, -50%) rotate(calc(var(--r) + 4deg)) scale(1.08)
+      }
+    }
+
+    /* ---------- hero ---------- */
+    #hero {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 6%;
+      transition: opacity .4s, transform .4s
+    }
+
+    body:not([data-page="home"]) #hero {
+      opacity: 0;
+      transform: translateY(40px);
+      pointer-events: none
+    }
+
+    h1 {
+      font-family: 'Rozha One', serif;
+      font-weight: 400;
+      color: #fff;
+      line-height: .9;
+      font-size: clamp(56px, 13vw, 230px);
+      white-space: nowrap;
+      margin-left: 15.5%;
+      transform: rotate(4deg);
+      transform-origin: left bottom;
+      text-shadow: 0 8px 0 rgba(0, 0, 0, .18);
+      animation: drop 1s cubic-bezier(.2, 1.4, .4, 1) both;
+    }
+
+    h1 .m {
+      display: none
+    }
+
+    h1 span {
+      display: inline-block;
+      animation: bob 6s ease-in-out infinite
+    }
+
+    h1 span:nth-child(2n) {
+      animation-delay: -2s
+    }
+
+    h1 span:nth-child(3n) {
+      animation-delay: -4s
+    }
+
+    @keyframes bob {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-6px)
+      }
+    }
+
+    @keyframes drop {
+      from {
+        opacity: 0;
+        transform: rotate(4deg) translateY(-120px) scale(1.2)
+      }
+    }
+
+    .tag {
+      position: relative;
+      display: inline-block;
+      margin: 1.2% 0 0 25%;
+      font-family: 'Bowlby One SC', sans-serif;
+      color: var(--yellow);
+      font-size: clamp(16px, 3vw, 52px);
+      letter-spacing: -.02em;
+      transform: rotate(4deg);
+      transform-origin: left top;
+      animation: drop 1s .25s cubic-bezier(.2, 1.4, .4, 1) both;
+    }
+
+    .tag::before,
+    .tag::after {
+      content: attr(data-t);
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .tag::before {
+      color: #ffe36a;
+      animation: glitch1 3.2s infinite steps(1)
+    }
+
+    .tag::after {
+      color: #e8a800;
+      animation: glitch2 2.7s infinite steps(1)
+    }
+
+    @keyframes glitch1 {
+
+      0%,
+      88%,
+      100% {
+        clip-path: inset(0 0 100% 0);
+        transform: none
+      }
+
+      90% {
+        clip-path: inset(20% 0 55% 0);
+        transform: translateX(-10px)
+      }
+
+      93% {
+        clip-path: inset(60% 0 15% 0);
+        transform: translateX(8px)
+      }
+
+      96% {
+        clip-path: inset(40% 0 40% 0);
+        transform: translateX(-5px)
+      }
+    }
+
+    @keyframes glitch2 {
+
+      0%,
+      80%,
+      100% {
+        clip-path: inset(100% 0 0 0);
+        transform: none
+      }
+
+      82% {
+        clip-path: inset(10% 0 70% 0);
+        transform: translateX(9px)
+      }
+
+      86% {
+        clip-path: inset(70% 0 5% 0);
+        transform: translateX(-9px)
+      }
+
+      90% {
+        clip-path: inset(35% 0 45% 0);
+        transform: translateX(5px)
+      }
+    }
+
+    /* ---------- pages ---------- */
+    .page {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(680px, 88vw);
+      max-height: 62vh;
+      overflow: auto;
+      transform: translate(-50%, -40%) rotate(-1.5deg) scale(.9);
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(255, 255, 255, .96);
+      color: #1c1c2e;
+      border-radius: 28px;
+      padding: 2rem 2.2rem;
+      border: 4px solid var(--navy);
+      box-shadow: 0 14px 0 rgba(0, 0, 0, .25);
+      transition: opacity .35s, transform .45s cubic-bezier(.2, 1.3, .4, 1);
+      will-change: transform, opacity;
+    }
+
+    body[data-page="about"] #about,
+    body[data-page="portfolio"] #portfolio,
+    body[data-page="connect"] #connect {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -30%) rotate(-1.5deg) scale(1);
+    }
+
+    .page h2 {
+      font-family: 'Rozha One', serif;
+      font-weight: 400;
+      font-size: 2.4rem;
+      color: var(--red);
+      margin-bottom: .6rem
+    }
+
+    .page p {
+      line-height: 1.55;
+      font-size: 1.1rem;
+      margin-bottom: .8rem
+    }
+
+    .page a {
+      color: var(--navy);
+      font-weight: 600
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem
+    }
+
+    .card {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.2rem;
+      min-height: 110px;
+      font-weight: 600;
+      transition: transform .2s
+    }
+
+    .card:hover {
+      transform: rotate(-2deg) scale(1.04)
+    }
+
+    .card small {
+      display: block;
+      font-weight: 500;
+      opacity: .8;
+      margin-top: .3rem
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    /* ---------- portfolio gallery ---------- */
+    #portfolio {
+      width: min(780px, 92vw);
+      max-height: 68vh
+    }
+
+    .card {
+      font: inherit;
+      font-weight: 600;
+      text-align: left;
+      border: 3px solid var(--navy-edge);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      font-size: 1.1rem
+    }
+
+    .card.has-cover {
+      background-size: cover;
+      background-position: center top;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, .7)
+    }
+
+    .card.has-cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 20, 70, .9), rgba(15, 20, 70, .05) 65%)
+    }
+
+    .card>* {
+      position: relative
+    }
+
+    .card:focus-visible,
+    .pf-back:focus-visible,
+    .pf-arrow:focus-visible,
+    .pf-track:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 2px
+    }
+
+    #pfGallery {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      padding: max(12px, env(safe-area-inset-top)) 14px max(10px, env(safe-area-inset-bottom));
+      background: #1a0709;
+      color: #fff
+    }
+
+    .pf-head {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      padding-bottom: .6rem
+    }
+
+    .pf-head h2 {
+      font-family: 'Rozha One', serif;
+      font-weight: 400;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      flex: 1;
+      text-align: center;
+      margin: 0
+    }
+
+    .pf-count {
+      min-width: 4.5rem;
+      text-align: right;
+      font-weight: 600;
+      font-size: .95rem;
+      opacity: .8
+    }
+
+    .pf-back {
+      font: inherit;
+      font-weight: 600;
+      color: #fff;
+      background: var(--navy);
+      border: 2px solid var(--navy-edge);
+      border-radius: 999px;
+      padding: .4rem 1rem;
+      cursor: pointer;
+      min-width: 4.5rem
+    }
+
+    .pf-back:hover {
+      background: #2c42c4
+    }
+
+    .pf-stage {
+      position: relative;
+      flex: 1;
+      min-height: 0   /* lets the photo shrink to whatever space is left on screen */
+    }
+
+    .pf-track {
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      height: 100%
+    }
+
+    .pf-track::-webkit-scrollbar {
+      display: none
+    }
+
+    .pf-slide {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      position: relative;
+      min-height: 100%
+    }
+
+    .pf-slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      user-select: none;
+      -webkit-user-drag: none
+    }
+
+    .pf-soon {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-content: center;
+      text-align: center;
+      font-weight: 600;
+      color: #fff;
+      padding: 1rem
+    }
+
+    .pf-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2.6rem;
+      height: 2.6rem;
+      border-radius: 50%;
+      border: 3px solid var(--navy-edge);
+      background: var(--navy);
+      color: #fff;
+      font-size: 1.7rem;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, .25);
+      transition: background .2s, opacity .2s
+    }
+
+    .pf-arrow.prev {
+      left: .5rem
+    }
+
+    .pf-arrow.next {
+      right: .5rem
+    }
+
+    .pf-arrow:hover {
+      background: #2c42c4
+    }
+
+    .pf-arrow[disabled] {
+      opacity: .25;
+      cursor: default
+    }
+
+    .pf-dots {
+      display: flex;
+      justify-content: center;
+      gap: .5rem;
+      margin-top: .8rem
+    }
+
+    .pf-dots button {
+      width: .7rem;
+      height: .7rem;
+      border-radius: 50%;
+      border: 0;
+      padding: 0;
+      background: rgba(255, 255, 255, .35);
+      cursor: pointer;
+      transition: background .2s, transform .2s
+    }
+
+    .pf-dots button[aria-current="true"] {
+      background: var(--yellow);
+      transform: scale(1.35)
+    }
+
+    @media (max-width:700px) {
+      #portfolio .grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      #portfolio .card {
+        min-height: 120px;
+        font-size: 1rem
+      }
+
+      .pf-arrow {
+        display: none
+      }
+
+      /* swipe on phones */
+    }
+
+    /* ---------- connect form ---------- */
+    #connectForm {
+      display: grid;
+      gap: .9rem;
+      margin-top: 1rem
+    }
+
+    #connectForm label {
+      display: grid;
+      gap: .3rem;
+      font-weight: 600;
+      color: var(--navy)
+    }
+
+    #connectForm input,
+    #connectForm textarea {
+      font: inherit;
+      font-weight: 500;
+      color: #1c1c2e;
+      padding: .7rem .9rem;
+      border: 3px solid var(--navy);
+      border-radius: 16px;
+      background: #fff;
+      resize: vertical;
+      width: 100%
+    }
+
+    #connectForm input:focus,
+    #connectForm textarea:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(153, 34, 34, .2)
+    }
+
+    #connectForm [aria-invalid="true"] {
+      border-color: var(--red)
+    }
+
+    .req {
+      color: var(--red);
+      font-weight: 600
+    }
+
+    .reqnote {
+      font-size: .85rem !important;
+      margin: .6rem 0 0 !important;
+      color: #555
+    }
+
+    .field-err {
+      color: var(--red);
+      font-size: .8rem;
+      font-weight: 500;
+      line-height: 1.3
+    }
+
+    .field-err:empty {
+      display: none
+    }
+
+    #thwip {
+      justify-self: start;
+      font-family: 'Bowlby One SC', sans-serif;
+      font-size: 1.3rem;
+      color: #fff;
+      background: var(--red);
+      border: 3px solid #5e1111;
+      border-radius: 999px;
+      padding: .6rem 1.8rem;
+      cursor: pointer;
+      box-shadow: 0 6px 0 rgba(0, 0, 0, .3);
+      transition: transform .15s, box-shadow .15s
+    }
+
+    #thwip:hover {
+      transform: translateY(-2px) rotate(-2deg)
+    }
+
+    #thwip:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, .3)
+    }
+
+    #thwip:disabled {
+      opacity: .6;
+      cursor: wait
+    }
+
+    #formStatus {
+      min-height: 1.4em;
+      margin: 0;
+      font-weight: 600
+    }
+
+    #formStatus.ok {
+      color: #1a7a3a
+    }
+
+    #formStatus.err {
+      color: var(--red);
+      font-size: .85rem;
+      font-weight: 500
+    }
+
+    /* web-shot overlay */
+    #shot {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 60
+    }
+
+    #shot path,
+    #shot circle {
+      fill: none;
+      stroke: #fff;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 3px rgba(0, 0, 0, .45))
+    }
+
+    @media (max-width:700px) {
+      h1 {
+        margin-left: 6%;
+        font-size: min(22vw, 17vh);
+        white-space: normal;
+        line-height: .95;
+        transform: rotate(3deg)
+      }
+
+      h1 .m {
+        display: block;
+        height: 0
+      }
+
+      /* "KYE" / "ORTEGA" on two lines */
+      .tag {
+        margin-left: 8%;
+        font-size: 4.2vw;
+        transform: rotate(3deg)
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition: none !important
+      }
+    }
+  </style>
+</head>
+
+<body data-page="home">
+
+  <svg id="bg" viewBox="0 0 2000 1125" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g id="parallax"></g>
+  </svg>
+
+  <nav>
+    <a href="#home" class="active">home</a>
+    <a href="#about">about me</a>
+    <a href="#portfolio">portfolio</a>
+    <a href="#connect">connect</a>
+  </nav>
+
+  <header id="hero">
+    <h1 id="name" aria-label="Kye Ortega"></h1>
+    <div class="tag" data-t="SLINGING CODES &amp; SNAPPING SHOTS">SLINGING CODES &amp; SNAPPING SHOTS</div>
+  </header>
+
+  <section class="page" id="about">
+    <h2>about me</h2>
+    <p>well, officially it’s caitlin, but kye just fits better! endlessly curious, a little creative, and always chasing
+      something new to learn. when i’m not working, i’m behind a camera chasing natural light and the funny, unplanned
+      moments that make the best stories. i’m also a proud hobby collector: cooking, sewing, scrapbooking, jiu-jitsu,
+      and books i swear i’ll only “skim.” some stick, some don’t, but the fun’s in the trying.</p>
+    <p>that same curiosity shaped my career. i studied management information systems, IT management, and accounting
+      through my BS, MS, and executive MBA, not to stack degrees, but to understand how business and tech work together
+      to solve real problems. i love strategy, systems, and creativity equally, especially when there’s chaos to turn
+      into order (sometimes with just a spreadsheet). growth is the goal: i experiment, learn by doing, and try not to
+      take myself too seriously.</p>
+  </section>
+
+  <section class="page" id="portfolio">
+    <h2 id="pfTitle">portfolio</h2>
+
+    <!-- category picker -->
+    <div class="grid" id="pfGrid">
+      <button type="button" class="card" data-cat="academia">academia<small></small></button>
+      <button type="button" class="card" data-cat="digital">digital modeling<small></small></button>
+      <button type="button" class="card" data-cat="techwear">techwear<small></small></button>
+      <button type="button" class="card" data-cat="sports">sports<small></small></button>
+    </div>
+
+  </section>
+
+  <!-- full-screen gallery: a page of its own so every photo fits the screen without scrolling.
+       (kept outside the card above so it can cover the whole window) -->
+  <div id="pfGallery" role="dialog" aria-modal="true" aria-label="photo gallery" hidden>
+    <div class="pf-head">
+      <button type="button" class="pf-back" id="pfBack">&larr; all work</button>
+      <h2 id="pfGalTitle"></h2>
+      <span class="pf-count" id="pfCount"></span>
+    </div>
+    <div class="pf-stage">
+      <button type="button" class="pf-arrow prev" id="pfPrev" aria-label="previous photo">&lsaquo;</button>
+      <div class="pf-track" id="pfTrack" tabindex="0" aria-label="photos, swipe or use the arrow keys"></div>
+      <button type="button" class="pf-arrow next" id="pfNext" aria-label="next photo">&rsaquo;</button>
+    </div>
+    <div class="pf-dots" id="pfDots"></div>
+  </div>
+
+  <section class="page" id="connect">
+    <h2>connect</h2>
+    <p>want to work together or just say hi? drop me a message! <br> check out my <a
+        href="https://calendly.com/green-does-everything/moodboard-series?month=2026-10" target="_blank"
+        rel="noopener">moodboard series</a> :] </p>
+    <p class="reqnote"><span class="req" aria-hidden="true">*</span> required</p>
+    <!-- action/method = FormSubmit's standard setup; the script below sends it in the background instead
+         (so the web animation can play) and this is the fallback if JavaScript is ever unavailable -->
+    <form id="connectForm" action="https://formsubmit.co/green.does.everything@gmail.com" method="POST" novalidate>
+      <label><span>name <b class="req" aria-hidden="true">*</b></span>
+        <input type="text" name="name" autocomplete="name" required maxlength="100" aria-describedby="err-name">
+        <small class="field-err" id="err-name" role="alert"></small>
+      </label>
+      <label><span>email <b class="req" aria-hidden="true">*</b></span>
+        <input type="email" name="email" autocomplete="email" required maxlength="150" aria-describedby="err-email">
+        <small class="field-err" id="err-email" role="alert"></small>
+      </label>
+      <label><span>message <b class="req" aria-hidden="true">*</b></span>
+        <textarea name="message" rows="5" required maxlength="3000" aria-describedby="err-message"></textarea>
+        <small class="field-err" id="err-message" role="alert"></small>
+      </label>
+      <input type="hidden" name="_subject" value="New message from your website">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <!-- spam trap: real people never see or fill this -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+      <button type="submit" id="thwip">thwip!</button>
+      <p id="formStatus" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <svg id="shot" aria-hidden="true"></svg>
+
+  <script>
+    // ---- title letters (for the bobbing animation) ----
+    const name = document.getElementById('name');
+    name.innerHTML = [...'KYE ORTEGA'].map(c => c === ' ' ? ' <i class="m"></i>' : `<span>${c}</span>`).join('');
+
+    // ---- spiderweb generator ----
+    const NS = 'http://www.w3.org/2000/svg';
+    function web({cx, cy, spokes, rings, r0, growth, length, sx = 1, sy = 1, cls, width, jitter = 0.12, sway = ''}) {
+      const g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', `${cls} ${sway ? 'sway ' + sway : ''}`.trim());
+      g.style.transformOrigin = `${cx}px ${cy}px`;
+      const rnd = (a) => (Math.random() - .5) * 2 * a;
+      const angs = Array.from({length: spokes}, (_, i) => (i / spokes) * Math.PI * 2 + rnd(jitter) / 2);
+      const P = (a, r) => [cx + Math.cos(a) * r * sx, cy + Math.sin(a) * r * sy];
+      let d = '';
+      const spoke = document.createElementNS(NS, 'path');
+      angs.forEach(a => {const [x, y] = P(a, length); d += `M${cx},${cy}L${x},${y}`;});
+      spoke.setAttribute('d', d); spoke.setAttribute('stroke-width', width);
+      g.appendChild(spoke);
+      let r = r0;
+      for (let i = 0; i < rings; i++) {
+        let rd = '';
+        for (let k = 0; k < spokes; k++) {
+          const a1 = angs[k], a2 = angs[(k + 1) % spokes] + (k === spokes - 1 ? Math.PI * 2 : 0);
+          const rr = r * (1 + rnd(.03));
+          const [x1, y1] = P(a1, rr), [x2, y2] = P(a2, rr);
+          const [qx, qy] = P((a1 + a2) / 2, rr * 0.9);   // sag toward the centre
+          rd += `M${x1},${y1}Q${qx},${qy} ${x2},${y2}`;
+        }
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', rd); p.setAttribute('stroke-width', width * .9);
+        if (cls === 'light') {p.setAttribute('class', 'ring'); p.style.animationDelay = `${(rings - i) * 0.12}s`;}
+        g.appendChild(p);
+        r *= growth;
+      }
+      return g;
+    }
+
+    const root = document.getElementById('parallax');
+    const webs = [
+      // dark background webs (behind)
+      // rings now run all the way out to the end of the spokes, so the webs aren't cut off
+      web({cx: 400, cy: 120, spokes: 14, rings: 17, r0: 14, growth: 1.25, length: 640, cls: 'dark', width: 3.2, sway: 'b'}),
+      web({cx: 1770, cy: 960, spokes: 16, rings: 17, r0: 14, growth: 1.27, length: 760, cls: 'dark', width: 3.2, sway: 'c'}),
+      // big light webs
+      web({cx: 0, cy: 745, spokes: 22, rings: 13, r0: 16, growth: 1.3, length: 1500, sx: 1.4, cls: 'light', width: 2, sway: 'b'}),
+      web({cx: 1113, cy: 160, spokes: 30, rings: 15, r0: 14, growth: 1.27, length: 2200, sx: 1.15, sy: 1.25, cls: 'light', width: 2.2, sway: ''}),
+    ];
+    webs.forEach(w => root.appendChild(w));
+    // long anchor threads across the screen
+    const th = document.createElementNS(NS, 'path');
+    th.setAttribute('d', 'M0,135L2000,150M0,560L2000,730');
+    th.setAttribute('stroke', '#f4e9e4'); th.setAttribute('stroke-width', '2'); th.setAttribute('fill', 'none');
+    root.insertBefore(th, root.children[2]);
+
+    // ---- mouse parallax ----
+    addEventListener('pointermove', e => {
+      const x = (e.clientX / innerWidth - .5), y = (e.clientY / innerHeight - .5);
+      root.style.transform = `translate(${x * -24}px,${y * -16}px)`;
+    });
+
+    // ---- keep the nav pills pinned to the web centre and scaled to fit ----
+    function layoutNav() {
+      const vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
+      const s = Math.max(vw / 2000, vh / 1125);               // same maths as preserveAspectRatio="slice"
+      const cx = vw / 2 + (1113 - 1000) * s, cy = vh / 2 + (160 - 562.5) * s;
+      // pills reach ~190 units left / ~270 right of the centre; shrink so none leave the screen
+      const u = Math.max(.3, Math.min(s * 1.05, (cx - 8) / 190, (vw - cx - 12) / 305, (cy - 8) / 110));
+      const n = document.querySelector('nav').style;
+      n.setProperty('--cx', cx + 'px'); n.setProperty('--cy', cy + 'px'); n.setProperty('--u', u);
+      n.setProperty('--p', vw > 700 ? u * 0.75 : u);   // pill size: smaller on desktop (change 0.75 to taste)
+    }
+    addEventListener('resize', layoutNav); layoutNav();
+
+    // ---- simple hash router ----
+    function route() {
+      const p = (location.hash || '#home').slice(1);
+      const page = ['home', 'about', 'portfolio', 'connect'].includes(p) ? p : 'home';
+      document.body.dataset.page = page;
+      scrollTo(0, 0);
+      if (page !== 'portfolio') try {closeGallery();} catch (_) {}   // always reopen the portfolio on the category picker
+      document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.hash === '#' + page));
+    }
+    // handle clicks ourselves so the browser never tries to scroll to the #section (that caused the flicker)
+    document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      if (location.hash !== a.hash) {
+        try {history.pushState(null, '', a.hash);} catch (_) {location.hash = a.hash;}
+      }
+      route();
+    }));
+    addEventListener('popstate', route);
+    addEventListener('hashchange', route); route();
+
+    // ---- portfolio: category cards -> swipeable gallery ----
+    // HOW TO EDIT: drop photo files in the "portfolio" folder, then add a line to the right list below.
+    // The gallery shows photos in the same order as these lines (first line = first photo, which is
+    // also the cover on the card). To reorder, just cut and paste the lines. Keep commas between lines
+    // (none after the last one).
+    const PORTFOLIO = {
+      academia: {title: 'academia', images: [
+        {src: 'portfolio/academia-3.webp', alt: 'ACADEMIA poster: a smiling woman waving, holding books and wearing a pearl headband'},
+        {src: 'portfolio/academia-2.webp', alt: 'A pencil scribble above the quote "You\'re free to be different."'},
+        {src: 'portfolio/academia-1.webp', alt: 'Three portraits in academia-style outfits, each holding a book'}
+      ]},
+      digital: {title: 'digital modeling', images: [
+        {src: 'portfolio/digital-1.webp', alt: 'MUSE poster: a black-and-white portrait of a smiling woman with red halftone and scribble graphics'},
+        {src: 'portfolio/digital-2.webp', alt: 'Digital modeling collage: four portraits of a model in a white top on a dark textured background with red accents'},
+        {src: 'portfolio/digital-3.webp', alt: 'Photo grid titled "model: karla" with six portraits of a model in a white top against a grey wall, signed Kye Ortega'}
+      ]},
+      techwear: {title: 'techwear', images: [
+        {src: 'portfolio/techwear-1.webp', alt: 'TECHWEAR photoshoot poster: a model in dark sunglasses and a zip-up top, lit in blue, with a glowing futuristic eye graphic'},
+        {src: 'portfolio/techwear-2.webp', alt: 'Techwear collage of four blue-lit portraits, including models holding glowing masks, with circuit and laptop graphics and the name Kye Ortega'}
+      ]},
+      sports: {title: 'sports', images: [
+        {src: 'portfolio/sports-1.webp', alt: 'SPORTS magazine cover: a woman lying on a tennis court holding a tennis ball out toward the camera, with a racket beside her'},
+        {src: 'portfolio/sports-2.webp', alt: 'Magazine spread about tennis and women\'s health with four tall tennis-court photos and a short article'},
+        {src: 'portfolio/sports-3.webp', alt: '"5 Pro Tips to Elevate Your Game" page: a woman leaning on a tennis net holding a racket and ball, with a numbered tip list'},
+        {src: 'portfolio/sports-4.webp', alt: '"Game On: Women\'s Health Tips" page with two tennis-court photos and tips on listening to your body and staying socially connected'}
+      ]}
+    };
+    const pf = {
+      grid: document.getElementById('pfGrid'), gallery: document.getElementById('pfGallery'),
+      track: document.getElementById('pfTrack'), dots: document.getElementById('pfDots'),
+      prev: document.getElementById('pfPrev'), next: document.getElementById('pfNext'),
+      title: document.getElementById('pfGalTitle'), count: document.getElementById('pfCount')
+    };
+    // label each card with its photo count and use the first photo as a cover
+    pf.grid.querySelectorAll('.card').forEach(c => {
+      const cat = PORTFOLIO[c.dataset.cat], n = cat.images.length;
+      c.querySelector('small').textContent = n ? `${n} photo${n > 1 ? 's' : ''}` : 'coming soon';
+      if (n) {c.classList.add('has-cover'); c.style.backgroundImage = `url("${cat.images[0].src}")`;}
+      c.addEventListener('click', () => openGallery(c.dataset.cat));
+    });
+    function slideIndex() {return Math.round(pf.track.scrollLeft / pf.track.clientWidth);}
+    function updateGallery() {
+      const i = slideIndex(), n = pf.track.children.length;
+      pf.prev.disabled = i <= 0; pf.next.disabled = i >= n - 1;
+      [...pf.dots.children].forEach((d, k) => k === i ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current'));
+      pf.count.textContent = PORTFOLIO_OPEN && PORTFOLIO_OPEN.images.length ? `${i + 1} / ${n}` : '';
+    }
+    let PORTFOLIO_OPEN = null;
+    function goTo(i) {
+      const n = pf.track.children.length;
+      pf.track.scrollTo({left: Math.max(0, Math.min(n - 1, i)) * pf.track.clientWidth, behavior: 'smooth'});
+    }
+    function openGallery(key) {
+      const cat = PORTFOLIO[key]; PORTFOLIO_OPEN = cat;
+      pf.title.textContent = cat.title;
+      pf.track.innerHTML = ''; pf.dots.innerHTML = '';
+      if (!cat.images.length) {
+        pf.track.innerHTML = '<div class="pf-slide"><p class="pf-soon">photos coming soon!<br>check back in a bit.</p></div>';
+      } else cat.images.forEach((im, i) => {
+        const s = document.createElement('div'); s.className = 'pf-slide';
+        const img = Object.assign(new Image(), {src: im.src, alt: im.alt, draggable: false});
+        s.appendChild(img); pf.track.appendChild(s);
+        const d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', `photo ${i + 1}`);
+        d.addEventListener('click', () => goTo(i)); pf.dots.appendChild(d);
+      });
+      pf.dots.hidden = pf.track.children.length < 2;
+      pf.gallery.hidden = false;
+      pf.track.style.scrollBehavior = 'auto'; pf.track.scrollLeft = 0; pf.track.style.scrollBehavior = '';
+      updateGallery(); pf.track.focus({preventScroll: true});
+    }
+    function closeGallery() {
+      pf.gallery.hidden = true;
+    }
+    document.getElementById('pfBack').addEventListener('click', closeGallery);
+    // clicking the dark background (anywhere that isn't a photo or a control) closes the gallery
+    pf.gallery.addEventListener('click', e => {
+      if (e.target.closest('.pf-arrow, .pf-dots, .pf-back')) return;
+      const img = e.target.closest('img');
+      if (img) {
+        // the <img> box is bigger than the visible photo (object-fit: contain), so test the real picture area
+        const b = img.getBoundingClientRect(), k = Math.min(b.width / img.naturalWidth, b.height / img.naturalHeight);
+        const w = img.naturalWidth * k, h = img.naturalHeight * k;
+        const left = b.left + (b.width - w) / 2, top = b.top + (b.height - h) / 2;
+        if (e.clientX >= left && e.clientX <= left + w && e.clientY >= top && e.clientY <= top + h) {
+          // tapping the photo itself advances to the next one, looping back to the first after the last
+          const n = pf.track.children.length, i = slideIndex();
+          if (n > 1) goTo(i >= n - 1 ? 0 : i + 1);
+          return;
+        }
+      }
+      closeGallery();
+    });
+    pf.prev.addEventListener('click', () => goTo(slideIndex() - 1));
+    pf.next.addEventListener('click', () => goTo(slideIndex() + 1));
+    pf.track.addEventListener('scroll', () => requestAnimationFrame(updateGallery), {passive: true});
+    addEventListener('keydown', e => {
+      if (document.body.dataset.page !== 'portfolio' || pf.gallery.hidden) return;
+      if (e.key === 'ArrowRight') goTo(slideIndex() + 1);
+      else if (e.key === 'ArrowLeft') goTo(slideIndex() - 1);
+      else if (e.key === 'Escape') closeGallery();
+    });
+    addEventListener('resize', () => {pf.track.style.scrollBehavior = 'auto'; goTo(slideIndex()); pf.track.style.scrollBehavior = '';});
+
+    // ---- connect form: "thwip!" shoots a web, then sends the message to Kye's email ----
+    const FORM_ENDPOINT = 'https://formsubmit.co/ajax/green.does.everything@gmail.com';
+    const form = document.getElementById('connectForm');
+    const statusEl = document.getElementById('formStatus');
+    const thwip = document.getElementById('thwip');
+
+    function shootWeb(fromEl) {
+      const svg = document.getElementById('shot');
+      const vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
+      const b = fromEl.getBoundingClientRect();
+      const sx = b.left + b.width / 2, sy = b.top + b.height / 2;
+      svg.innerHTML = '';
+      const add = (tag, attrs) => {
+        const el = document.createElementNS(NS, tag);
+        for (const k in attrs) el.setAttribute(k, attrs[k]);
+        svg.appendChild(el); return el;
+      };
+      // a main strand shoots up to the web at the top of the screen, plus a fan of side strands
+      const targets = [[vw * .55, vh * .12], ...Array.from({length: 7}, (_, i) => [vw * (.05 + i * .15), vh * (.04 + Math.random() * .2)])];
+      const strands = targets.map(([x, y], i) => {
+        const p = add('path', {d: `M${sx},${sy} Q${(sx + x) / 2 + (Math.random() - .5) * 80},${(sy + y) / 2} ${x},${y}`, 'stroke-width': i ? 2 : 4});
+        const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+        return p.animate([{strokeDashoffset: len}, {strokeDashoffset: 0}], {duration: 380, delay: i * 30, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards'}).finished;
+      });
+      // little web splat where the button was
+      for (let r = 14; r <= 56; r += 14) add('circle', {cx: sx, cy: sy, r, 'stroke-width': 1.8});
+      for (let a = 0; a < 8; a++) add('path', {d: `M${sx},${sy}L${sx + Math.cos(a * Math.PI / 4) * 60},${sy + Math.sin(a * Math.PI / 4) * 60}`, 'stroke-width': 1.8});
+      svg.animate([{opacity: 0}, {opacity: 1}], {duration: 120, fill: 'forwards'});
+      return Promise.all(strands).then(() => svg.animate([{opacity: 1}, {opacity: 0}], {duration: 600, delay: 500, fill: 'forwards'}).finished)
+        .then(() => {svg.innerHTML = '';});
+    }
+
+    // friendly, per-field validation: every field is required (whitespace-only doesn't count)
+    const emailOK = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+    const rules = {
+      name: v => !v.trim() ? 'please tell me your name so i know who to reply to.' : '',
+      email: v => !v.trim() ? 'please enter your email so i can reply to you.'
+        : !emailOK(v.trim()) ? 'that email doesn’t look quite right. it should look like name@example.com.' : '',
+      message: v => !v.trim() ? 'please write a message before sending.' : ''
+    };
+    function showError(field, msg) {
+      const input = form.elements[field];
+      document.getElementById('err-' + field).textContent = msg;
+      if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+    }
+    function validate() {
+      let firstBad = null;
+      for (const field in rules) {
+        const msg = rules[field](form.elements[field].value);
+        showError(field, msg);
+        if (msg && !firstBad) firstBad = form.elements[field];
+      }
+      if (firstBad) firstBad.focus();
+      return !firstBad;
+    }
+    // clear a field's error as soon as the visitor starts fixing it
+    for (const field in rules) form.elements[field].addEventListener('input', () => {
+      if (form.elements[field].hasAttribute('aria-invalid')) showError(field, rules[field](form.elements[field].value));
+    });
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      statusEl.className = ''; statusEl.textContent = '';
+      const data = Object.fromEntries(new FormData(form));
+      if (!validate()) return;
+      if (data._honey) return;   // bot
+      thwip.disabled = true;
+      shootWeb(thwip);
+      let reached = false;   // did FormSubmit answer at all?
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+          body: JSON.stringify({
+            name: data.name.trim(), email: data.email.trim(), message: data.message.trim(),
+            _subject: `New message from ${data.name.trim()} (kyeortega site)`, _template: 'table', _captcha: 'false'
+          })
+        });
+        reached = true;
+        const out = await res.json().catch(() => ({}));
+        if (!res.ok || out.success === 'false' || out.success === false) throw new Error(out.message || 'send failed');
+        form.reset();
+        statusEl.className = 'ok'; statusEl.textContent = 'thwip! message sent. i’ll get back to you soon!';
+      } catch (err) {
+        console.error('form send failed:', err);
+        if (!reached) {
+          // the browser/host blocked the background request (e.g. a sandboxed page or file://):
+          // fall back to a normal form post into a hidden frame, which is allowed in more places
+          let frame = document.getElementById('fsFrame');
+          if (!frame) {
+            frame = Object.assign(document.createElement('iframe'), {name: 'fsFrame', id: 'fsFrame'});
+            frame.style.display = 'none'; document.body.appendChild(frame);
+          }
+          form.target = 'fsFrame';
+          HTMLFormElement.prototype.submit.call(form);
+          form.reset();
+          statusEl.className = 'ok'; statusEl.textContent = 'thwip! message sent. i’ll get back to you soon!';
+          return;
+        }
+        statusEl.className = 'err';
+        statusEl.innerHTML = 'hmm, that didn’t go through. you can email me directly at <a href="mailto:green.does.everything@gmail.com">green.does.everything@gmail.com</a>.'
+          + '<br><span style="opacity:.7">(details: ' + String(err && err.message || err).replace(/[<>&]/g, '') + ')</span>';
+      } finally {
+        thwip.disabled = false;
+      }
+    });
+
+    // ---- intro: little spiders scurry across the screen, then vanish ----
+    function spawnSpiders() {
+      const vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
+      const layer = document.createElement('div'); layer.id = 'spiders';
+      document.body.appendChild(layer);
+      const size = Math.max(22, Math.min(44, vw * 0.028));
+      const leg = (x, y) => `<line x1="0" y1="0" x2="${x}" y2="${y}"/>`;
+      const spiderSVG = `
+        <svg width="${size}" height="${size}" viewBox="-20 -20 40 40">
+          <g class="legs">
+            <g class="legA">${leg(-17, -12)}${leg(-19, 2)}${leg(17, -2)}${leg(15, 13)}</g>
+            <g class="legB">${leg(17, -12)}${leg(19, 2)}${leg(-17, -2)}${leg(-15, 13)}</g>
+          </g>
+          <ellipse cx="0" cy="5" rx="6" ry="8" fill="#120708"/>
+          <circle cx="0" cy="-5" r="4.5" fill="#120708"/>
+          <circle cx="-1.8" cy="-6.5" r="1" fill="#ffc919"/><circle cx="1.8" cy="-6.5" r="1" fill="#ffc919"/>
+        </svg>`;
+      const rand = (a, b) => a + Math.random() * (b - a);
+      const N = 12, anims = [];
+      for (let i = 0; i < N; i++) {
+        // enter from a random edge, wander through a few waypoints, leave by another edge
+        const edge = () => {
+          const s = Math.floor(rand(0, 4)), m = size * 2;
+          return s === 0 ? [rand(0, vw), -m] : s === 1 ? [vw + m, rand(0, vh)] : s === 2 ? [rand(0, vw), vh + m] : [-m, rand(0, vh)];
+        };
+        const pts = [edge(), [rand(vw * .15, vw * .85), rand(vh * .15, vh * .85)], [rand(vw * .1, vw * .9), rand(vh * .1, vh * .9)], edge()];
+        let prev = 0;
+        const frames = pts.map(([x, y], k) => {
+          const [nx, ny] = pts[Math.min(k + 1, pts.length - 1)], [px, py] = pts[Math.max(k - 1, 0)];
+          let a = Math.atan2(ny - py, nx - px) * 180 / Math.PI + 90;   // head points where it's going
+          while (a - prev > 180) a -= 360;
+          while (a - prev < -180) a += 360;
+          prev = a;
+          return {transform: `translate(${x - size / 2}px,${y - size / 2}px) rotate(${a}deg)`, offset: k / (pts.length - 1)};
+        });
+        const el = document.createElement('div'); el.className = 'spider'; el.innerHTML = spiderSVG;
+        layer.appendChild(el);
+        anims.push(el.animate(frames, {duration: rand(3200, 5200), delay: i * 220 + rand(0, 300), easing: 'ease-in-out', fill: 'both'}).finished);
+      }
+      Promise.all(anims).then(() => {
+        layer.animate([{opacity: 1}, {opacity: 0}], {duration: 400, fill: 'forwards'}).finished.then(() => layer.remove());
+      });
+    }
+    spawnSpiders();
+  </script>
+</body>
+
+</html>
