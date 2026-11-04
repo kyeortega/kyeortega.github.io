@@ -41,9 +41,9 @@ header { padding: 56px 0 24px; }
 @keyframes blink { 50% { opacity: .2; } }
 h1 { font-size: clamp(52px, 13vw, 104px); font-weight: 700; line-height: 1; letter-spacing: .005em; margin: 24px 0 20px; }
 h1 .hl { font-weight: 700; }
-.lede { max-width: 34em; color: var(--muted); font-size: 20px; margin: 0; }
+.lede { max-width: 30em; color: var(--muted); font-size: 22px; margin: 0; text-wrap: balance; }
 @media (max-width: 620px) { .lede { font-size: 3.5vw; line-height: 1.5; overflow-wrap: break-word; } }
-.lede .hl { font-weight: 500; }
+.lede .hl { font-weight: 500; padding-right: .04em; }
 
 section { padding: 40px 0; }
 .sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
@@ -189,7 +189,7 @@ footer { padding: 16px 0 32px; }
 </footer>
 
 <script>
-  const SEALED = {"s":"zE2nwmtDcq8kFqY5YSB3Cg==","i":"PekzC123fh6nFo3L","c":"R54z55dIdpKuac2UtiGkdqrOXWnW4Zi9nVxHnL7xgWItdeFl912nqsRlLyoZ+9spIyB6zQgY8UHkjw3KaWyvRPyUZguER7I/+mjocG25z0nnTiwmJ3MC79xWNWSSYYgImgmTI2ggG7OW5C/tBAEvwNo8dInN2oa2VoHZBUdO5NOjy61ftn+xYpqxX/uXTUSPM5uLImzHmhs5CUeV28AuJPI/uE4QI8k6LtCNrIYlsDnSKekzD08WZ98DSB9DHHstT0yUaX2WQ0Waxt1waQDr+aTV/itFkDGnxHMxghf4Pj+DvYFyLcKK3Q4F1vXVDWiM5Pm02qksnD33xo5qzQXazpzmMjL2ONLuYSkNC+JZZTnR8xFaUWDHWmLuP051Xxb/tBqOyjAG8cFQ2vDa3mbGNqf9t6ej4UNcPZEck06Rdypm3/DtqKP606WU2CHS2hnGY/NaSg3k31hAnFyljlwhkS6JGC3f1P0OJ777geFFxcf7m9YARFsdBTt+1hxL2TwH2IVzACMXxPQqoPUMUniD2pZu4d3hG2Z8h3bcigK+R2HU0aVS3yg9GrG2oayD/6/IBhn+ixh5j1cR71cDMUgwPgFAzrUgQoZ4+9qbc+uahgolzpXl6uhHXrPnvTk3R+C6QwGsm8S45w/IeGaNj2aBJNA+8IGxlt7YqOQbO5WNuC7eBRqtrIQfQe+kCfQAi/cBXFvBKBI24+NMJHMO+x6Zaogt+mRxDwsN8e91udHhKTP3O+xxXS4269DiBmszeRbV79J2bAB4fB1tOQr5Ww=="};
+  const SEALED = {"s":"eRT9VNlu+kg3vU4GIfWF7A==","i":"g6ZQ6wL++pas9NIo","c":"sgXO/FsT4jBQuh8Tpxr5nZLiJdhWn2z9w+I8yorcNbgpjO9am0TM7RmZY1JiN6Pzj1BKb3p3U2IAo3HS+wu/I+jMbEr7FodeWVtd3oR5AjQZ9aYF2Kkf97oSj7E8ItTE4sp9Ok+lslyd+t/MKHzuAC5s8bMnMwja/v2mtJ73QHivV2qR0J6P5Yqkyo14zb9nR1tCMQm742zy0I7+MCNW1vGqVYqdtsR5vOypKFLJHq3UGR/mPFbSCwzIWmjOOUT2kG/E6gqi0dA+KQl0LeYF1sYsQuiK9nfvXo2bMGh5Vls+C3/QwyN03Wv1+ZKCRrUioXm2OiWfBza5mMya+ey/dGYBfmv86XLvhp+m48Q1Q3Bkrv+svrOcpK92tWM8XZI3Z9aTuuRPOWnIZTUb1Fmu774V8+2UqQPiZj9n1WXFWzkFrLmHUos/P66pn1HfRVmxBdLRSvWTE75ovRXVoyU7wCzgl5qGm5m8bxgoqX09uvL4p/3jsRjXGVQscttEybMNJkZ0a4XnX2XVrd1SqmqoXzWebbMi5thSoHEaNJeouqn3I5P4DhJr0HQXkuq4Ml1AexLPLpV5B7EQlhPPOdwZ5N2gux3YW8ALtbnulXYQPdl1ZNi788SLRBTvqoNqgIX9nojKnAbu6M0GBM0NGheQAUqi4LtBFBilh0GdmMK2PaHergKV+rrSe8bWu8ve3/KAoo7Vf4xxX3438rOjoqgdXAXoaL2cYKZ7AhmrjPHb2PXTRnlKWGQR0XEPGwadR1A/fZ9Eu2ck80NELJHm3g=="};
   const form = document.getElementById('lock');
   const input = document.getElementById('pw');
   const hint = document.getElementById('hint');
